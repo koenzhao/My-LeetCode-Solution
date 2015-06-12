@@ -60,3 +60,23 @@
 		map<int, int> nums_map;
 		map<int, int>::iterator it_map;
 	};
+
+
+提交完后runtime是76ms，在C/C++中是很落后的了，于是去Discuss区看别人的解法，果然有猫腻！有一个技巧可以用在此题，那就是XOR，异或，A^B^A=B：
+	
+	class Solution
+	{
+	public:
+    	int singleNumber(vector<int>& nums) 
+		{
+        	if(nums.empty()) return 0;
+        	int first = nums[0];
+        	for(int i = 1; i<nums.size();i++) 
+			{
+            	first = first ^ nums[i];
+        	}
+        	return first;
+    	}
+	};	
+
+上面这个是21ms的，能进10ms的只有C了。
