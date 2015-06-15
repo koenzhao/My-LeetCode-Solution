@@ -29,3 +29,23 @@ private:
 
 运行时间44ms，属于C++中中等偏慢的。本次的练习可以检查出我链表的操作写起来不熟悉，多加练习！
 
+Discuss区里有一段简短的C++实现程序，```Easy recursive solution in C++```
+
+
+```c++
+ListNode* addList(ListNode* l1, ListNode* l2, int carry) {
+    if(!l1 && !l2) {
+        if(carry) return new ListNode(carry);
+        else return NULL;
+    }
+    int val = carry + (l1?l1->val:0) + (l2?l2->val:0);
+    ListNode* newNode = new ListNode(val%10);
+    newNode->next = addList(l1?l1->next:NULL, l2?l2->next:NULL, val/10);
+    return newNode;
+}
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    return addList(l1, l2, 0);
+}
+```
+
+确实挺简短，这段程序是递归实现的，并且用了条件运算符，所以才能达到这么简短；还有另外一段20ms的C程序，思路差不多，但看到后就明白了一个前面没搞懂的东西。我前面新建一个节点的时候总是用malloc去新开辟一段内存空间，里面存着0，这样就导致了链表一开始总是以0开头。在这个C程序里面看到了新建一个节点是其实可以直接对指针赋值NULL，就没那么多问题了。
