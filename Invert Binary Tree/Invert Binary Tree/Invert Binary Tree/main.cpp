@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define MAXSIZE 100
 /*Invert Binary Tree*/
+/*集合二叉树相关算法*/
 struct TreeNode
 {
 	int data;
@@ -59,6 +61,35 @@ void InOrder(TreeNode* ptr)//中序遍历
 	}
 }
 
+void InOrder_Traverse(TreeNode* root)//中序遍历（非递归版）
+{
+	TreeNode* Stack[10], *ptr = root;
+	int top = 0;
+	bool Bool = true;
+	if (root == NULL)
+		printf("Binary Tree is Empty!\n");
+	else
+	{
+		do
+		{
+			while (ptr != NULL)
+			{
+				Stack[++top] = ptr;
+				ptr = ptr->left;
+			}
+			if (top == 0)
+				Bool = false;
+			else
+			{
+				ptr = Stack[top];
+				top--;
+				printf("%d ", ptr->data);
+				ptr = ptr->right;
+			}
+		} while (Bool != false);
+	}
+}
+
 void PostOrder(TreeNode* ptr)//后序遍历
 {
 	if (!ptr)
@@ -69,8 +100,9 @@ void PostOrder(TreeNode* ptr)//后序遍历
 		PostOrder(ptr->right);
 		printf("%d ", ptr->data);
 	}
+
 }
-void swap(TreeNode* ptr)
+void swap(TreeNode* ptr)//交换左右孩子
 {
 	TreeNode* temp = NULL;
 	temp = ptr->left;
@@ -78,9 +110,9 @@ void swap(TreeNode* ptr)
 	ptr->right = temp;
 }
 
-void InvertBinaryTree(TreeNode* ptr)
+void InvertBinaryTree(TreeNode* ptr)//翻转二叉树
 {
-	if (!ptr)
+	if (!ptr) 
 		return;
 	else
 	{
@@ -90,18 +122,30 @@ void InvertBinaryTree(TreeNode* ptr)
 	}
 }
 
+void Level(TreeNode* root)
+{
+	TreeNode* Queue[MAXSIZE], *ptr;
+	int fornt, rear;
+}
+
 int main()
 {
 	int data[] = {0,4,2,7,1,3,6,9};
 	TreeNode* Root_Node = NULL;
 	int ArrSize = sizeof(data) / sizeof(int);
 	Root_Node = Create_BinaryTree(data,ArrSize);
-	//printf("%d \n",Root_Node->left->left->data);
+	
+	/******************************
 	PreOrder(Root_Node);
 	printf("\n");
 	InvertBinaryTree(Root_Node);
 	PreOrder(Root_Node);
 	printf("\n");
+	******************************/
+	
+	InOrder(Root_Node);
+	printf("\n");
+	InOrder_Traverse(Root_Node);
 
 	return 0;
 }
