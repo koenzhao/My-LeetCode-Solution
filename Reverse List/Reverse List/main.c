@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "List.h"
 
+ListNode* g_head = NULL;
+
 void ReverseList(ListNode** head)
 {
 	if (head == NULL || *head == NULL)
@@ -19,7 +21,14 @@ void ReverseList(ListNode** head)
 	}
 	(*head)->next = ptr_1;
 }
-
+/************************************
+·´×ªÑÝÊ¾£º
+1->2->3->4->5->NULL
+1->3->2->4->5->NULL
+1->4->3->2->5->NULL
+1->5->4->3->2->NULL
+5->4->3->2->1->NULL
+************************************/
 void ReverseList_2(ListNode** head)
 {
 	ListNode* first = (*head)->next;
@@ -38,6 +47,22 @@ void ReverseList_2(ListNode** head)
 	first->next = NULL;
 }
 
+void Reverse3(ListNode* head)
+{
+	ListNode* ptr_Prev = head;
+	ListNode* ptr_Next = ptr_Prev->next;
+
+	if (ptr_Next == NULL)
+	{
+		g_head = ptr_Prev;
+		return;
+	}
+		
+	else
+		Reverse3(ptr_Next);
+	ptr_Next->next = ptr_Prev;
+}
+
 int main()
 {
 	ListNode* head = NULL;
@@ -47,10 +72,11 @@ int main()
 		List_Insert(&head, i);
 	}
 	List_Print(&head);
-	ReverseList(&head);
-	List_Print(&head);
-	ReverseList_2(&head);
-	List_Print(&head);
-
+	//ReverseList(&head);
+	//List_Print(&head);
+	//ReverseList_2(&head);
+	//List_Print(&head);
+	Reverse3(head->next);
+	List_Print(&g_head);
 	return 0;
 }
