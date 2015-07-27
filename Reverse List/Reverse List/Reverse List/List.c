@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct Node
-{
-	int data;
-	struct Node* next;
-}ListNode;
+#include "List.h"
 
 void List_Init( ListNode** head)
 {
@@ -58,18 +53,4 @@ void List_Print(ListNode** head)
 	}
 	printf("NULL ");
 	printf("\n");
-}
-
-int main()
- {
-	ListNode* head = NULL;
-	List_Init(&head);
-	for (int i = 0; i < 10; ++i)
-	{
-		List_Insert(&head, i);
-	}
-	List_Delete(&head, 2);
-	List_Print(&head);
-
-	return 0;
 }
