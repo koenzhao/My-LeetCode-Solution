@@ -76,7 +76,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="List.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SingleList.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SingleList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
