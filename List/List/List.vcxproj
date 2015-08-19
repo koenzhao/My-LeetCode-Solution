@@ -77,7 +77,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SingleList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SingleList.h" />
