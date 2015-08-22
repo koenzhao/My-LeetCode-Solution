@@ -1,28 +1,16 @@
 #include <iostream>
 using namespace std;
 
-class Base
+int fuck(int* a)
 {
-public:
-	void fun(int n);
-	void fun(char c);
-};
-
-void Base::fun(int n)
-{
-	cout << n << endl;
-}
-
-void Base::fun(char c)
-{
-	int n = (int)c;
-	fun(n); // 可以直接调用
-	this->fun(n); // 或者加上this
+	return (sizeof(a) / sizeof(int));
 }
 
 int main()
 {
-	Base b;
-	b.fun('A');
+	int a[4] = { 2, 5, 8, 4 };
+	int size = 0;
+	size = ((a + 1) - a);
+	cout << size << endl;
 	return 0;
 }

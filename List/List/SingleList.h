@@ -41,6 +41,7 @@ public:
 	ListNode<T>* List_tail();
 	void print();
 	ListNode<T>* GetNNode(int n);
+	int GetLength();
 private:
 	ListNode<T>* head = NULL;
 	int ListNode_Sum = 0;
@@ -173,6 +174,21 @@ ListNode<T>* Single_List<T>::GetNNode(int n)
 		p = p->next;
 	}
 	return p;
+}
+
+template <class T>
+int Single_List<T>::GetLength()
+{
+	ListNode<T>* p = List_head();
+	int length = 0;
+	while (p != NULL)
+	{
+		length++;
+		p = p->next;
+	}
+	if (length != ListNode_Sum)
+		ListNode_Sum = length;
+	return length;
 }
 
 #endif
