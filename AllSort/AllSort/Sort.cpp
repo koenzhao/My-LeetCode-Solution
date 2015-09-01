@@ -2,12 +2,14 @@
 #include <vector>
 using namespace std;
 
+/*交换元素*/
 void swap(int &a, int &b)
 {
 	int temp = a;
 	a = b;
 	b = temp;
 }
+/*打印数组*/
 void print(vector<int> &num)
 {
 	vector<int>::iterator i;
@@ -17,6 +19,7 @@ void print(vector<int> &num)
 	}
 	printf("\n");
 }
+/*快排核心：Partition算法*/
 unsigned int Partition(vector<int> &num, unsigned int left, unsigned int right)
 {
 	unsigned int i = left;
@@ -34,6 +37,77 @@ unsigned int Partition(vector<int> &num, unsigned int left, unsigned int right)
 	swap(num[i], num[left]);
 	return i;
 }
+/*大根堆调整函数*/
+void AdjustHeap_maxroot(vector<int> &num,int node,int size)
+{
+	if (num.empty())
+		return;
+	int max = node;
+	int left = 2 * node + 1;
+	int right = 2 * node + 2;
+	if (left < size && num[left] > num[max])
+	{
+		max = left;
+	}
+	if (right < size && num[right] > num[max])
+	{
+		max = right;
+	}
+	if (max != node)
+	{
+		swap(num[max], num[node]);
+		AdjustHeap_maxroot(num, max, size);
+	}
+}
+/*建堆函数*/
+void BuildHeap(vector<int> &num)
+{
+	if (num.empty())
+		return;
+	for (int i = (num.size() / 2); i >= 0; i--)
+	{
+		AdjustHeap_maxroot(num, i, num.size());
+	}
+
+}
+/*归并核心*/
+void MergeSortCore(vector<int> &num,unsigned int first,unsigned int mid,unsigned last)
+{
+	unsigned int i = first;
+	unsigned int j = mid + 1;
+	unsigned int end_i = mid;
+	unsigned int end_j = last;
+	vector<int> buff;
+	while (i <= end_i && j <= end_j)
+	{
+		if (num[i] < num[j])
+		{
+			buff.push_back(num[i]);
+			i++;
+		}
+		else if (num[i] > num[j])
+		{
+			buff.push_back(num[j]);
+			j++;
+		}
+	}
+	while (i<=end_i)
+	{
+		buff.push_back(num[i]);
+		i++;
+	}
+	while (j <= end_j)
+	{
+		buff.push_back(num[j]);
+		j++;
+	}
+	vector<int>::iterator ptr = buff.begin();
+	for (i = first; i <= last; ++i,ptr++)
+	{
+		num[i] = *ptr;
+	}
+}
+
 /*插入排序*/
 void InsertSort(vector<int> &num)
 {
@@ -158,13 +232,40 @@ void QuickSort(vector<int> &num,unsigned left,unsigned right)
 		QuickSort(num, i+1, right);
 	}
 }
+/*堆排序*/
+void HeapSort(vector<int> &num)
+{
+	if (num.empty())
+		return;
+	BuildHeap(num);
+	for (int i = num.size() - 1; i >= 0; i--)
+	{
+		swap(num[i], num[0]);
+		AdjustHeap_maxroot(num, 0, i);
+	}
+}
+/*归并排序*/
+void MergeSort(vector<int> &num,unsigned int first,unsigned int last)
+{
+	if (num.empty())
+		return;
+	if (first < last)
+	{
+		unsigned int mid = (first + last) / 2;
+		MergeSort(num, first, mid);
+		MergeSort(num, mid + 1, last);
+		MergeSortCore(num, first, mid, last);
+	}
+
+}
+
 
 
 int main()
 {
-	vector<int> num = { 5, 3, 7, 1, 9, 2, 4, 8, 6 };
-	//vector<int> num = {9,8,7,6,5,4,3,2,1};
-	QuickSort(num,0,num.size()-1);
+	//vector<int> num = { 5, 3, 7, 1, 9, 2, 4, 8, 6 };
+	vector<int> num = {9,8,7,6,5,4,3,2,1};
+	MergeSort(num,0,num.size()-1);
 	print(num);
 	system("pause");
 	return 0;
