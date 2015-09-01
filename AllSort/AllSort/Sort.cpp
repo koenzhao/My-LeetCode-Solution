@@ -258,14 +258,71 @@ void MergeSort(vector<int> &num,unsigned int first,unsigned int last)
 	}
 
 }
+/*Õ∞≈≈–Ú*/
+void BucketSort(vector<int> &num)
+{
+	if (num.empty())
+		return;
+	vector< vector<int> > bucket(10,vector<int>(0,0));
+	for (unsigned int i = 0;(!num.empty()); ++i)
+	{
+		int flag = num.back() / 10;
+		bucket[flag].push_back(num.back());
+		num.pop_back();
 
+	}
+	for (unsigned int i = 0; i < bucket.size(); ++i)
+	{
+		if (!bucket.empty())
+			InsertSort(bucket[i]);
+	}
+	//num.clear();
+	for (unsigned int i = 0; i < bucket.size(); ++i)
+	{
+		if (!bucket[i].empty())
+		{
+			for (unsigned int j = 0; j < bucket[i].size(); ++j)
+			{
+				num.push_back(bucket[i][j]);
+			}
+		}
+	}
+}
+/*º∆ ˝≈≈–Ú*/
+void CountSort(vector<int> &num)
+{
+	if (num.empty())
+		return;
+	int max = 0;
+	for (unsigned int i = 0; i < num.size(); ++i)
+	{
+		if (num[i]>max)
+			max = num[i];
+	}
+	vector<int> count(max+1);
+	for (unsigned int i = 0; i < num.size(); ++i)
+	{
+		count[num[i]]++;
+	}
+	for (unsigned int i = 0; i < count.size(); ++i)
+	{
+		if (count[i] != 0)
+		{
+			cout << " " << i << " ";
+			count[i]--;
+		}
+			
+	}
+	cout << endl;
+}
 
 
 int main()
 {
 	//vector<int> num = { 5, 3, 7, 1, 9, 2, 4, 8, 6 };
-	vector<int> num = {9,8,7,6,5,4,3,2,1};
-	MergeSort(num,0,num.size()-1);
+	//vector<int> num = {9,8,7,6,5,4,3,2,1};
+	vector<int> num = { 92, 87, 74, 63, 51, 44, 39, 20, 12 };
+	CountSort(num);
 	print(num);
 	system("pause");
 	return 0;
